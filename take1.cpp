@@ -20,38 +20,6 @@ AnalogIn analog0(A0);
 AnalogIn analog1(A1);
 AnalogIn analog2(A2);
 
-//interruptsenser
-//InterruptIn counter(D2);
-//InterruptIn counter(D3);
-
-//time
-Timer t;
-
-/*counter
-int q_counter = 0;
-
-void handler(void)
-{
-    q_counter++;
-}*/
-/*interrupt
-int main() {
-    counter.rise(handler);
-    counter.fall(handler);
-
-    while(1){
-        digital1 = -digital1;
-
-        printf("C:%7d¥n",q_counter);
-
-        wait(0.1);
-    }
-}*/
-/*timer
-        t.reset();
-        printf("The Time taken was %f second\n",t.read());
-*/
-
 void advance(float duty){
     digital1 = 1;
     pwm1 = duty;
@@ -102,7 +70,6 @@ void shototsu(float vo){
 int main(){
 
     int i;
-//    t.start();
 
     while(1){
         //LEDgreen

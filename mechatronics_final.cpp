@@ -1,8 +1,5 @@
 //
-//ƒƒJƒgƒƒjƒNƒXÀK
-//ÅIR¸‰ï
 //2018/01/11
-//A-6”Ç@‘ –{E“c’†E’·]
 //
 #include "mbed.h"
 #include "rtos.h"
@@ -12,7 +9,7 @@ const int SIG_TH1 = 0x1;   //signal number
 //Robot state structure
 typedef struct{
     short push_on;         //switch
-    short ref_sensor;@    //sensor imformation
+    short ref_sensor;ã€€    //sensor imformation
     short black;            //sensor gray
     short former;          //former sensor imformation
     short back;            //back mode
@@ -53,52 +50,52 @@ void motor(int digital,float duty_R,float duty_L){
 }
 //LED
 void flash(int R,int L){
-    ledR=R;     @@@@@@@//1,0 (on=1,off=0)
-    ledL=L;     @@@@@@@//1,0
+    ledR=R;     ã€€ã€€ã€€ã€€ã€€ã€€ã€€//1,0 (on=1,off=0)
+    ledL=L;     ã€€ã€€ã€€ã€€ã€€ã€€ã€€//1,0
 }
 //sensor_input
 void sensor_input(Newsmap* map){
-    //‰Šú‰»
+    //åˆæœŸåŒ–
     map->ref_sensor= 0;
     map->black = 0;
-    //ƒXƒCƒbƒ`‚ª”½‰‚µ‚½‚ç‚P
-    if(pushswitch.read()>0.0) map->push_on = 1;@@@@@//Switch is on.
-    //‚Qi”‚É‚æ‚é”’•”»’è(”’‚OA•‚P)
-    if(refRight.read()<=0.35f) map->ref_sensor += 1;@@//001,Right
+    //ã‚¹ã‚¤ãƒƒãƒãŒåå¿œã—ãŸã‚‰ï¼‘
+    if(pushswitch.read()>0.0) map->push_on = 1;ã€€ã€€ã€€ã€€ã€€//Switch is on.
+    //ï¼’é€²æ•°ã«ã‚ˆã‚‹ç™½é»’åˆ¤å®š(ç™½ï¼ã€é»’ï¼‘)
+    if(refRight.read()<=0.35f) map->ref_sensor += 1;ã€€ã€€//001,Right
     if(refCenter.read()<=0.028f) map->ref_sensor += 2; //010,Center
-    if(refLeft.read()<=0.20f) map->ref_sensor += 4; @@//100,Left
-    //•‚ğ‚Q’iŠK‚Å”»’è
-    if(refRight.read()<=0.20f) map->black = 1;@@@@@@//Right
-    if(refCenter.read()<=0.022f) map->black = 2;   @@@//Center
-    if(refLeft.read()<=0.10f) map->black = 3; @@@@@@//Left
+    if(refLeft.read()<=0.20f) map->ref_sensor += 4; ã€€ã€€//100,Left
+    //é»’ã‚’ï¼’æ®µéšã§åˆ¤å®š
+    if(refRight.read()<=0.20f) map->black = 1;ã€€ã€€ã€€ã€€ã€€ã€€//Right
+    if(refCenter.read()<=0.022f) map->black = 2;   ã€€ã€€ã€€//Center
+    if(refLeft.read()<=0.10f) map->black = 3; ã€€ã€€ã€€ã€€ã€€ã€€//Left
 }
 //linetrace
 /*
-ƒZƒ“ƒT[‚Ì”’•”»’è‚ğŒ³‚Éduty·‚ª‚¾‚ñ‚¾‚ñ‘å‚«‚­‚È‚é”ä—á§Œä‚É‚È‚Á‚Ä‚¢‚éB
-¡‰ñ‚Í’l‚ğ’¼Úİ’è‚µ‚Ä‚¢‚éB‚Ü‚½ƒZƒ“ƒT[‚Ì•‚ğ2’iŠK‚É‚·‚é‚±‚Æ‚Å10’Ê‚è‚Ì
-§Œä‚ğs‚È‚Á‚Ä‚¢‚éBƒZƒ“ƒT[‚ª‘S‚Ä”’‚Éo‚½‚ç‚³‚ç‚Éduty·‚ğ‚Â‚¯‚Ä‚¢‚é‚Ì‚Å
-‚³‚ç‚É‚Q’Ê‚è‚Ì§Œä‚ğs‚È‚Á‚Ä‚¢‚éB
+ã‚»ãƒ³ã‚µãƒ¼ã®ç™½é»’åˆ¤å®šã‚’å…ƒã«dutyå·®ãŒã ã‚“ã ã‚“å¤§ãããªã‚‹æ¯”ä¾‹åˆ¶å¾¡ã«ãªã£ã¦ã„ã‚‹ã€‚
+ä»Šå›ã¯å€¤ã‚’ç›´æ¥è¨­å®šã—ã¦ã„ã‚‹ã€‚ã¾ãŸã‚»ãƒ³ã‚µãƒ¼ã®é»’ã‚’2æ®µéšã«ã™ã‚‹ã“ã¨ã§10é€šã‚Šã®
+åˆ¶å¾¡ã‚’è¡Œãªã£ã¦ã„ã‚‹ã€‚ã‚»ãƒ³ã‚µãƒ¼ãŒå…¨ã¦ç™½ã«å‡ºãŸã‚‰ã•ã‚‰ã«dutyå·®ã‚’ã¤ã‘ã¦ã„ã‚‹ã®ã§
+ã•ã‚‰ã«ï¼’é€šã‚Šã®åˆ¶å¾¡ã‚’è¡Œãªã£ã¦ã„ã‚‹ã€‚
 */
 void linetrace(Newsmap* map){
-    //‰Šú‰»
-    float right = 0.0;@@@//duty”ä@Right
-    float left = 0.0;      //duty”ä@Left
-    //‹——£‚É‚æ‚é©ŒÈˆÊ’u„’è‚Å”ò‚Ñ‰z‚¦Asš‚Å’á‘¬‰^“]‚ğs‚¤
-    if(counterR>51000&&counterR<53200)map->jump=1;@@@//”ò‚Ñ‰z‚¦ŠJn
-    if(counterR>53200&&counterR<53500)map->jump=2;     //•ûŒü“]Š·
-    if(counterR>53500&&counterR<60000)map->jump=3;     //ü‚Ü‚Å’¼ii’á‘¬j
-    if(counterR>60000)map->jump=0;                     //”ò‚Ñ‰z‚¦I—¹
-    //duty”ä‚Ìİ’è
-    float z = 0.33; @@@@@//’¼i@010
-    float a = 0.20; @@@@@//‰ñ“]i’áj
-    float b = 0.30; @@@@@//‰ñ“]i‘¬j 011,110
-    float c = 0.33; @@@@@//‰ñ“]i‘¬j 001,100
-    float g = 0.0;@@@@@@//110,011—p
-    float y = 0.0;          //100,001—p
-    float x = 0.01;         //000—p
-    float m = 0.02;         //motor‚Ìduty·—p
+    //åˆæœŸåŒ–
+    float right = 0.0;ã€€ã€€ã€€//dutyæ¯”ã€€Right
+    float left = 0.0;      //dutyæ¯”ã€€Left
+    //è·é›¢ã«ã‚ˆã‚‹è‡ªå·±ä½ç½®æ¨å®šã§é£›ã³è¶Šãˆã€så­—ã§ä½é€Ÿé‹è»¢ã‚’è¡Œã†
+    if(counterR>51000&&counterR<53200)map->jump=1;ã€€ã€€ã€€//é£›ã³è¶Šãˆé–‹å§‹
+    if(counterR>53200&&counterR<53500)map->jump=2;     //æ–¹å‘è»¢æ›
+    if(counterR>53500&&counterR<60000)map->jump=3;     //ç·šã¾ã§ç›´é€²ï¼ˆä½é€Ÿï¼‰
+    if(counterR>60000)map->jump=0;                     //é£›ã³è¶Šãˆçµ‚äº†
+    //dutyæ¯”ã®è¨­å®š
+    float z = 0.33; ã€€ã€€ã€€ã€€ã€€//ç›´é€²ã€€010
+    float a = 0.20; ã€€ã€€ã€€ã€€ã€€//å›è»¢ï¼ˆä½ï¼‰
+    float b = 0.30; ã€€ã€€ã€€ã€€ã€€//å›è»¢ï¼ˆé€Ÿï¼‰ 011,110
+    float c = 0.33; ã€€ã€€ã€€ã€€ã€€//å›è»¢ï¼ˆé€Ÿï¼‰ 001,100
+    float g = 0.0;ã€€ã€€ã€€ã€€ã€€ã€€//110,011ç”¨
+    float y = 0.0;          //100,001ç”¨
+    float x = 0.01;         //000ç”¨
+    float m = 0.02;         //motorã®dutyå·®ç”¨
     float KD_T = 0.20;      //KD*DELTA_T
-    //Å‰‚Ì’¼üi‚‘¬j
+    //æœ€åˆã®ç›´ç·šï¼ˆé«˜é€Ÿï¼‰
     if(counterR<32000){
         z = 0.45;
         a = 0.40; 
@@ -107,7 +104,7 @@ void linetrace(Newsmap* map){
         m = 0.05;
         KD_T = 0.55;
     }
-    //”ò‚Ñ‰z‚¦i’á‘¬‚ÅƒgƒŒ[ƒXj
+    //é£›ã³è¶Šãˆï¼ˆä½é€Ÿã§ãƒˆãƒ¬ãƒ¼ã‚¹ï¼‰
     if(map->jump==3){
         z = 0.22;
         a = 0.22;
@@ -116,7 +113,7 @@ void linetrace(Newsmap* map){
         m = 0.0;
         KD_T = 0.20;
     }
-    //ƒOƒŒ[‚Åduty·‚ğ‘å‚«‚­
+    //ã‚°ãƒ¬ãƒ¼ã§dutyå·®ã‚’å¤§ãã
     if(map->black==1||map->black==3){
         g=0.01;
         y=0.02;
@@ -124,7 +121,7 @@ void linetrace(Newsmap* map){
     if(map->black==2){
         g=0.02;
     }
-    //sensor‚Ì”»’è‚ÅƒgƒŒ[ƒX‚·‚é
+    //sensorã®åˆ¤å®šã§ãƒˆãƒ¬ãƒ¼ã‚¹ã™ã‚‹
     int ref = map->ref_sensor;
     switch(ref){
         case 6: //110
@@ -152,7 +149,7 @@ void linetrace(Newsmap* map){
             right = a;
             left = c+y;
             break;
-        default:@//‘O‰ñ‚Ì’l‚ğŒ³‚É‘–siduty·‚Í‚æ‚è‘å‚«‚­j000,101,111
+        default:ã€€//å‰å›ã®å€¤ã‚’å…ƒã«èµ°è¡Œï¼ˆdutyå·®ã¯ã‚ˆã‚Šå¤§ããï¼‰000,101,111
             if(map->former==6||map->former==4){
                 flash(0,1);
                 right = c+x;
@@ -172,41 +169,41 @@ void linetrace(Newsmap* map){
                 ref=2;
             }
         }
-        //D§Œä‚ğs‚¤
+        //Dåˆ¶å¾¡ã‚’è¡Œã†
         if(right!=z){
             right = right + KD_T*(map->right-right);
             left = left + KD_T*(map->left-left);
         }
-        motor(0,right,left+m); //ƒ‚[ƒ^[“Á«‚É‚æ‚è¶‰E· ’Êí0.03
-        //ƒf[ƒ^‚ğ•Û‘¶
+        motor(0,right,left+m); //ãƒ¢ãƒ¼ã‚¿ãƒ¼ç‰¹æ€§ã«ã‚ˆã‚Šå·¦å³å·® é€šå¸¸0.03
+        //ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
         map->right=right;
         map->left=left;
-        //”ò‚Ñ‰z‚¦
-        if(map->jump==1){  //•ûŒü•ÏŠ·
+        //é£›ã³è¶Šãˆ
+        if(map->jump==1){  //æ–¹å‘å¤‰æ›
             flash(0,0);
             motor(0,0.33f,0.29f);
             map->jump=3;
         }
-        if(map->jump==2){  //’á‘¬’¼ü
+        if(map->jump==2){  //ä½é€Ÿç›´ç·š
             flash(1,1);
             motor(0,0.30f,0.30f);
-            ref=6;         //•‚ğŒ©‚Â‚¯‚é‚Ü‚Å’¼ü
+            ref=6;         //é»’ã‚’è¦‹ã¤ã‘ã‚‹ã¾ã§ç›´ç·š
         }
         //push back       
         if(map->push_on==1){
             map->back++;
-            if(map->back<55)motor(1,0.26,0.70);  //•ûŒü“]Š·
+            if(map->back<55)motor(1,0.26,0.70);  //æ–¹å‘è»¢æ›
             if(map->back>55&&map->back<70){    
                 flash(1,1);
-                motor(0,0.6,0.6);@@//’¼i
+                motor(0,0.6,0.6);ã€€ã€€//ç›´é€²
             }
             if(map->back>70){
                 map->push_on=0;
                 map->back=0;
-                ref=6;@@@@@@@@//•‚ğŒ©‚Â‚¯‚é‚Ü‚Å¶‰ñ“]
+                ref=6;ã€€ã€€ã€€ã€€ã€€ã€€ã€€ã€€//é»’ã‚’è¦‹ã¤ã‘ã‚‹ã¾ã§å·¦å›è»¢
             }
         }
-        //ƒf[ƒ^‚ğ•Û‘¶
+        //ãƒ‡ãƒ¼ã‚¿ã‚’ä¿å­˜
         map->former=ref;
 }
 //main control
@@ -215,7 +212,7 @@ void robot_control(void const* args){
     //motor(10kHz)
     pwmR.period(1.0/10000);
     pwmL.period(1.0/10000);
-    //‰Šú‰»
+    //åˆæœŸåŒ–
     map.push_on=0;
     map.back=0;
     map.jump=0;
